@@ -10,14 +10,13 @@ jobs:
   test:
     runs-on: macOS-latest
     steps:
-    - name: Checkout Main Branch
     - uses: actions/checkout@master
     - name: Checkout
       uses: actions/checkout@v2.4.0
     - name: Install Dependencies
       run: |
         pod --version
-#       pod install --repo-update
+        pod install --repo-update
 #      shell: bash
 #     - name: Set Default Scheme
 #       run: |
