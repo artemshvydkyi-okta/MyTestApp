@@ -11,12 +11,9 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@master
-    - name: Checkout
-      uses: actions/checkout@v2.4.0
-    - name: Install Dependencies
+    - name: Install Cocoapods
       run: |
-        pod --version
-        pod install --repo-update
+        pod --version; pod install --repo-update
 #      shell: bash
 #     - name: Set Default Scheme
 #       run: |
