@@ -11,12 +11,12 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@master
+    - name: Checkout
+      uses: actions/checkout@v2
     - name: Install Dependencies
       run: |
         pod install --repo-update
       shell: bash
-    - name: Checkout
-      uses: actions/checkout@v2
     - name: Set Default Scheme
       run: |
         scheme_list=$(xcodebuild -list -json | tr -d "\n")
