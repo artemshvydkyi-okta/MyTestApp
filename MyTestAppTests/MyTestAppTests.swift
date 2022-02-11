@@ -10,14 +10,13 @@ import XCTest
 
 class MyTestAppTests: XCTestCase {
 
-    
-    
+
+
     func testExample() {
-        
+
         let user = TestUser(firstName: "Tom", lastName: "Faster")
-        
+
         XCTAssertEqual(user.firstName, "Tom")
         XCTAssertEqual(user.lastName, "Faster")
     }
-
 }
