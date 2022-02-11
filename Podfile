@@ -7,6 +7,7 @@ target 'MyTestApp' do
 
   # Pods for MyTestApp
   pod 'SwifterSwift', '~> 5.2'
+  pod 'SwiftLint', '0.32.0'
 
   target 'MyTestAppTests' do
     inherit! :search_paths
