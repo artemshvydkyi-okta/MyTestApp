@@ -24,8 +24,8 @@ jobs:
     - name: Swiftlint
       run: bundle exec fastlane ios lint
       
-    - name: Lints your Podspec locally
-      run: pod lib lint
+#     - name: Lints your Podspec locally
+#       run: pod lib lint
       
 #     - name: Set Default Scheme
 #       run: |
