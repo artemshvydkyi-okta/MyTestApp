@@ -8,39 +8,7 @@ module Constants
   MY_TRY_ATTEMPTS = 2
 end
 
-module Utils
-  # Common test completion handler
-  def self.test_run_block
-    lambda do |testrun_info|
-      failed_test_count = testrun_info[:failed].size
 
-      if failed_test_count > 0
-        UI.important('The run of tests would finish with failures due to fragile tests here.')
-        try_attempt = testrun_info[:try_count]
-        if try_attempt < Constants::MY_TRY_ATTEMPTS
-          UI.header('Since we are using :multi_scan, we can re-run just those failing tests!')
-        end
-      end
-    end
-  end
-
-  # Routines after all tests are finished
-  def self.post_tests_routines(test_result)
-    unless test_result[:failed_testcount].zero?
-      UI.message("There are #{test_result[:failed_testcount]} legitimate failing tests")
-    end
-
-    reports = Dir['../fastlane/test_output/**/*.xml'].map { |relpath| File.absolute_path(relpath) }
-    if reports.size > 1
-      UI.message("collate_junit_reports with #{reports}")
-      collate_junit_reports(
-        reports: reports,
-        collated_report: './fastlane/test_output/test-result.xml'
-      )
-    end
-  end
-
-end
 
 platform :ios do
   # Runs SwiftLint on our codebase
@@ -58,7 +26,6 @@ platform :ios do
   lane :simulator_unit_tests do
     simulator_unit_tests(
       workspace: Constants::MY_XCODE_WORKSPACE_FILEPATH,
-      try_count: Constants::MY_TRY_ATTEMPTS,
       device: Constants::MY_XCODE_TARGET_DEVICE_NAME,
       only_testing: Constants::MY_XCODE_TARGET_TESTS,
       sdk: 'iphonesimulator',
@@ -66,10 +33,8 @@ platform :ios do
       xcpretty_args: '--no-utf',
       output_files: 'test-result.xml',
       output_types: 'junit',
-      testrun_completed_block: Utils.test_run_block,
       fail_build: true,
       clean: true
     )
-    Utils.post_tests_routines(result)
   end
 end
