@@ -9,7 +9,6 @@ module Constants
 end
 
 
-
 platform :ios do
   # Runs SwiftLint on our codebase
   lane :lint do
@@ -24,17 +23,18 @@ platform :ios do
 
   # Runs iOS Unit tests
   lane :simulator_unit_tests do
-    simulator_unit_tests(
-      workspace: Constants::MY_XCODE_WORKSPACE_FILEPATH,
-      device: Constants::MY_XCODE_TARGET_DEVICE_NAME,
-      only_testing: Constants::MY_XCODE_TARGET_TESTS,
-      sdk: 'iphonesimulator',
-      scheme: 'DeviceSDK_iOS',
-      xcpretty_args: '--no-utf',
-      output_files: 'test-result.xml',
-      output_types: 'junit',
-      fail_build: true,
-      clean: true
-    )
+    run_tests(scheme: "MyTestApp")
+    # simulator_unit_tests(
+    #   workspace: Constants::MY_XCODE_WORKSPACE_FILEPATH,
+    #   device: Constants::MY_XCODE_TARGET_DEVICE_NAME,
+    #   only_testing: Constants::MY_XCODE_TARGET_TESTS,
+    #   sdk: 'iphonesimulator',
+    #   scheme: 'DeviceSDK_iOS',
+    #   xcpretty_args: '--no-utf',
+    #   output_files: 'test-result.xml',
+    #   output_types: 'junit',
+    #   fail_build: true,
+    #   clean: true
+    # )
   end
 end
