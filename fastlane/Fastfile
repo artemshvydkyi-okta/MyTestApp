@@ -2,7 +2,7 @@
 # You can find the documentation at https://docs.fastlane.tools
 
 module Constants
-  MY_XCODE_WORKSPACE_FILEPATH = File.absolute_path('../DeviceSDK.xcworkspace')
+  MY_XCODE_WORKSPACE_FILEPATH = File.absolute_path('../MyTestApp.xcworkspace')
   MY_XCODE_TARGET_DEVICE_NAME = ENV['XCODE_TARGET_DEVICE_NAME']  # ex: "Ios automation iPhone K4982"
   MY_XCODE_TARGET_TESTS = ENV.has_key?('XCODE_TARGET_TESTS') ? ENV['XCODE_TARGET_TESTS'].split(",") : 'unused'
   MY_TRY_ATTEMPTS = 2
@@ -56,7 +56,7 @@ platform :ios do
 
   # Runs iOS Unit tests
   lane :simulator_unit_tests do
-    result = multi_scan(
+    simulator_unit_tests(
       workspace: Constants::MY_XCODE_WORKSPACE_FILEPATH,
       try_count: Constants::MY_TRY_ATTEMPTS,
       device: Constants::MY_XCODE_TARGET_DEVICE_NAME,
