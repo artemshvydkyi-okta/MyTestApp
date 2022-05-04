@@ -12,9 +12,7 @@ jobs:
       DEVELOPER_DIR: /Applications/Xcode_13.1.app/Contents/Developer
     steps:
     - uses: actions/checkout@v2
-    - name: List
-      run: xcrun simctl list
     - name: install pod
       run: pod install   
     - name: iOS UI Tests
-      run: set -o pipefail && xcodebuild -workspace MyTestApp.xcworkspace -scheme "MyTestAppUITests" -destination "platform=iOS Simulator,OS=latest,name=iPhone 11" test clean | xcpretty
+      run: set -o pipefail && xcodebuild -workspace MyTestApp.xcworkspace -scheme "MyTestAppUITests" -destination "platform=iOS Simulator,OS=latest,name=iPhone 11" test | xcpretty
