@@ -17,4 +17,4 @@ jobs:
     - name: install pod
       run: pod install   
     - name: iOS UI Tests
-      run: set -o pipefail && xcodebuild -workspace MyTestApp.xcworkspace -scheme "MyTestAppUITests" -destination "platform=iOS Simulator,name=iPhone 11,OS=latest" test
+      run: xcodebuild -workspace MyTestApp.xcworkspace -scheme "MyTestAppUITests" -destination "platform=iOS Simulator,name=iPhone 11,OS=latest" test
