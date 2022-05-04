@@ -12,6 +12,8 @@ jobs:
       DEVELOPER_DIR: /Applications/Xcode_13.1.app/Contents/Developer
     steps:
     - uses: actions/checkout@v2
+    - name: List
+      run: xcrun simctl list
     - name: install pod
       run: pod install   
     - name: iOS UI Tests
