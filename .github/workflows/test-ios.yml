@@ -2,45 +2,19 @@ name: iOS-Starter-Workflow
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
-    
 jobs:
-  test:
-    runs-on: macOS-latest
+  Tests:
+    runs-on: macos-11
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_13.1.app/Contents/Developer
     steps:
-    - uses: actions/checkout@master
-    - name: Install Cocoapods
-      run: |
-        pod --version; pod install --repo-update
-#      shell: bash
-#     - name: Set Default Scheme
-#       run: |
-#         scheme_list=$(xcodebuild -list -json | tr -d "\n")
-#         default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
-#         echo $default | cat >default
-#         echo Using default scheme: $default
-#     - name: Build
-#       env:
-#         scheme: ${{ 'default' }}
-#         platform: ${{ 'iOS Simulator' }}
-#       run: |
-#         # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
-#         device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print $1,$2}'`
-#         if [ $scheme = default ]; then scheme=$(cat default); fi
-#         if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
-#         file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-#         xcodebuild build-for-testing -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device"
-#     - name: Test
-#       env:
-#         scheme: ${{ 'default' }}
-#         platform: ${{ 'iOS Simulator' }}
-#       run: |
-#         # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
-#         device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print $1,$2}'`
-#         echo $device
-#         if [ $scheme = default ]; then scheme=$(cat default); fi
-#         if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
-#         file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-#         xcodebuild test-without-building -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device"
+    - uses: actions/checkout@v2
+    - name: install pod
+      run: pod install   
+    - name: iOS Unit Tests
+      run: set -o pipefail && xcodebuild -workspace MyTestApp.xcworkspace -scheme "MyTestAppTests" -destination "platform=iOS Simulator,OS=latest,name=iPhone 11" clean test | xcpretty
+    - name: iOS UI Tests
+      run: set -o pipefail && xcodebuild -workspace MyTestApp.xcworkspace -scheme "MyTestAppUITests" -destination "platform=iOS Simulator,OS=latest,name=iPhone 11" test clean test | xcpretty
