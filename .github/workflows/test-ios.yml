@@ -14,7 +14,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: install pod
       run: pod install   
-#    - name: iOS Unit Tests
-#      run: set -o pipefail && xcodebuild -workspace MyTestApp.xcworkspace -scheme "MyTestAppTests" -destination "platform=iOS Simulator,OS=latest,name=iPhone 11" clean test | xcpretty
     - name: iOS UI Tests
-      run: set -o pipefail && xcodebuild -workspace MyTestApp.xcworkspace -scheme "MyTestAppUITests" -destination "platform=iOS Simulator,OS=latest,name=iPhone 11" test clean test | xcpretty
+      run: set -o pipefail && xcodebuild -workspace MyTestApp.xcworkspace -scheme "MyTestAppUITests" -destination "platform=iOS Simulator,OS=latest,name=iPhone 11" test | xcpretty
